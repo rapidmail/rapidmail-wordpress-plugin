@@ -7,7 +7,17 @@ Check the [rapidmail wiki](https://de.rapidmail.wiki) for installation and usage
 
 ## Requirements
 
-The rapidmail wordpress plugin requires at least Wordpress version 4.6. 
+The rapidmail wordpress plugin requires at least Wordpress version 4.6.
+
+## Features
+
+* Add rapidmail subscription form widget to any widget-container
+* shortcode "rm_form" to add subscription form anywhere
+* Add checkbox to comment forms allowing newsletter subscription on writing comments
+
+## Support
+
+Please check [the rapidmail website](https://www.rapidmail.de/) for contact details. 
 
 ## License
 
