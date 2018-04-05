@@ -11,4 +11,4 @@ The rapidmail wordpress plugin requires at least Wordpress version 4.6.
 
 ## License
 
-The rapidmail wordpress plugin is licensed under the terms of the [GPLv2](src/LICENSE) license.
+The rapidmail wordpress plugin is licensed under the terms of the [GPLv2](LICENSE) license.
