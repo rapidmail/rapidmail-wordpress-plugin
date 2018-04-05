@@ -1,0 +1,78 @@
+<?php $url = $options->get('apiv3_subscribe_form_url'); ?>
+
+<?php if (!empty($url)): ?>
+<form class="rm-form" id="rm-subscriptionform-<?php echo $widget->number; ?>" action="<?php echo $url; ?>" method="post" target="_blank">
+
+    <ul class="rm-form-container">
+
+        <li rel="email">
+            <label for="rm-email"><?php \_e('E-Mail', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?><span class="required">*</span></label>
+            <input id="rm-email" name="email" type="text" autocomplete="email">
+        </li>
+
+        <?php if ($instance['show_firstname']): ?>
+            <li rel="text">
+                <label for="rm-firstname"><?php \_e('Vorname', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+                <input id="rm-firstname" name="firstname" type="text" autocomplete="given-name">
+            </li>
+        <?php endif; ?>
+
+        <?php if ($instance['show_lastname']): ?>
+            <li rel="text">
+                <label for="rm-lastname"><?php \_e('Nachname', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+                <input id="rm-lastname" name="lastname" type="text" autocomplete="family-name">
+            </li>
+        <?php endif; ?>
+
+        <?php if ($instance['show_gender']): ?>
+            <li rel="radio">
+                <label><?php \_e('Geschlecht', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+
+                <div class="rm-radio-container rm-gender-error-after">
+                    <div class="rm-radio-box">
+                        <input type="radio" id="rm_gender_female" name="gender" value="female" autocomplete="sex">
+                        <label for="rm_gender_female"><?php \_e('weiblich', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+                    </div>
+
+                    <div class="rm-radio-box">
+                        <input type="radio" id="rm_gender_male" name="gender" value="male" autocomplete="sex">
+                        <label for="rm_gender_male"><?php \_e('männlich', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+                    </div>
+                </div>
+
+            </li>
+        <?php endif; ?>
+
+        <?php if ($instance['show_mailtype']): ?>
+            <li rel="radio">
+                <label><?php \_e('Sendeformat', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+
+                <div class="rm-radio-container rm-mailtype-error-after">
+                    <div class="rm-radio-box">
+                        <input type="radio" id="rm_text" name="mailtype" value="text" autocomplete="off">
+                        <label for="rm_text"><?php \_e('Text', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+                    </div>
+
+                    <div class="rm-radio-box">
+                        <input type="radio" id="rm_html" name="mailtype" value="html" autocomplete="off">
+                        <label for="rm_html"><?php \_e('HTML', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?></label>
+                    </div>
+                </div>
+
+            </li>
+        <?php endif; ?>
+
+        <?php if ($hp_fieldname = $options->get('apiv3_subscribe_field_key')): ?>
+            <li style="position:absolute; z-index: -100; left:-6000px;" aria-hidden="true">
+                <input type="text" name="<?php echo $hp_fieldname; ?>" value="" tabindex="-1"/>
+            </li>
+        <?php endif; ?>
+
+        <li rel="button">
+            <input type="submit" value="<?php \_e('Anmelden', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?>" autocomplete="off">
+            <div class="spinner" style="background:url(<?php echo includes_url('images/spinner.gif') ; ?>)"></div>
+        </li>
+    </ul>
+
+</form>
+<?php endif; ?>

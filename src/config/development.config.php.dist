@@ -1,0 +1,5 @@
+<?php
+
+    return [
+        'apiv3_baseurl' => 'http://api.rapidmail.dev'
+    ];
