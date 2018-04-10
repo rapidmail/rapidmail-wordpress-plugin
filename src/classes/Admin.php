@@ -352,9 +352,36 @@
         }
 
         /**
+         * Add action links for plugins
+         */
+        private function addPluginActionLinks() {
+
+            \add_filter('plugin_action_links', function($links, $file) {
+
+                if ($file != RAPIDMAIL_PLUGIN_BASENAME) {
+                    return $links;
+                }
+
+                $settings_link = sprintf(
+                    '<a href="%1$s">%2$s</a>',
+                    menu_page_url('rapidmail', false),
+                    esc_html__('Settings', Rapidmail::TEXT_DOMAIN)
+                );
+
+                array_unshift( $links, $settings_link );
+
+                return $links;
+
+            }, 10, 2);
+
+        }
+
+        /**
          * Init admin handling
          */
         public function init() {
+
+            $this->addPluginActionLinks();
 
             \add_action('admin_init', [$this, 'onAdminInit']);
             \add_action('admin_enqueue_scripts', [$this, 'addScripts']);
