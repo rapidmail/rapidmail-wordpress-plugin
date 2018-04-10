@@ -87,7 +87,7 @@
         /**
          * @inheritdoc
          */
-        public function widget(array $args, $instance) {
+        public function widget($args, $instance) {
 
             $template = new Template();
             $template->assign([
