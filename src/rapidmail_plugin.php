@@ -10,5 +10,8 @@
      * Min WP Version: 4.6
      */
 
+    define('RAPIDMAIL_PLUGIN', __FILE__);
+    define('RAPIDMAIL_PLUGIN_BASENAME', plugin_basename(RAPIDMAIL_PLUGIN));
+
     require_once __DIR__ . '/classes/Rapidmail.php';
     Rapidmail\Rapidmail::instance();
