@@ -23,7 +23,24 @@
          * Constructor
          */
         public function __construct() {
+            $this->update();
+        }
+
+        /**
+         * Update options from wordpress
+         */
+        public function update() {
             $this->options = \get_option(self::OPTION_KEY);
+        }
+
+        /**
+         * Set all options
+         *
+         * @param $options
+         * @internal
+         */
+        public function setAll($options) {
+            $this->options = $options;
         }
 
         /**
