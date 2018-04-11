@@ -152,4 +152,12 @@
             return $this->adapter()->subscribeRecipient($recipientlistId, $recipientData);
         }
 
+        /**
+         * @inheritdoc
+         */
+        public function reset() {
+            unset($this->adapter);
+            $this->adapter = NULL;
+        }
+
     }
