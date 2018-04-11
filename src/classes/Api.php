@@ -116,7 +116,7 @@
             switch ($this->options->getApiVersion()) {
 
                 case 2:
-                    return $recipientlist['subscription_form_url'];
+                    return $recipientlist['api_data']['metadata']['subscription_form_url'];
 
                 case 3:
                     return $recipientlist['subscribe_form_url'];
