@@ -96,37 +96,16 @@
             if ($sane_data['api_version'] === 2) {
 
                 $sane_data['api_key'] = \sanitize_text_field($values['api_key']);
-
-                if (!\preg_match('/^[1-9][0-9]*$/', $values['recipient_list_id'])) {
-
-                    \add_settings_error(
-                        Options::OPTION_KEY,
-                        \esc_attr('recipient_list_id'),
-                        \__('Bitte eine gültige Empfängerlisten-ID angeben', Rapidmail::TEXT_DOMAIN),
-                        'error'
-                    );
-
-                } else {
-                    $sane_data['recipient_list_id'] = \intval($values['recipient_list_id']);
-                }
-
-                if (!preg_match('/^[1-9][0-9]*$/', $values['node_id'])) {
-
-                    \add_settings_error(
-                        Options::OPTION_KEY,
-                        \esc_attr('node_id'),
-                        \__('Bitte eine gültige Node-ID angeben', Rapidmail::TEXT_DOMAIN),
-                        'error'
-                    );
-
-                } else {
-                    $sane_data['node_id'] = \intval($values['node_id']);
-                }
+                $sane_data['recipient_list_id'] = empty($values['recipient_list_id']) ? '' : \intval($values['recipient_list_id']);
+                $sane_data['node_id'] = empty($values['node_id']) ? '' : \intval($values['node_id']);
 
             } elseif ($sane_data['api_version'] === 3) {
 
                 $sane_data['apiv3_username'] = \sanitize_text_field($values['apiv3_username']);
                 $sane_data['apiv3_password'] = \sanitize_text_field($values['apiv3_password']);
+
+                $this->options->setAll($sane_data);
+                $this->api->reset();
 
                 if ($this->api->isAuthenticated()) {
 
@@ -140,11 +119,7 @@
                         );
 
                     } else {
-
                         $sane_data['apiv3_recipientlist_id'] = \intval($values['apiv3_recipientlist_id']);
-                        $sane_data['apiv3_subscribe_form_url'] = $this->api->getSubscribeFormUrl($sane_data['apiv3_recipientlist_id']);
-                        $sane_data['apiv3_subscribe_field_key'] = $this->api->getSubscribeFieldKey($sane_data['apiv3_recipientlist_id']);
-
                     }
 
                 }
@@ -153,6 +128,19 @@
 
             $sane_data['comment_subscription_active'] = \intval($values['comment_subscription_active']);
             $sane_data['comment_subscription_label'] = empty($values['comment_subscription_label']) ? NULL : \sanitize_text_field($values['comment_subscription_label']);
+
+            $this->options->setAll($sane_data);
+            $this->api->reset();
+
+            if ($this->api->isConfigured()) {
+
+                $sane_data['subscribe_form_url'] = $this->api->getSubscribeFormUrl();
+
+                if ($this->options->getApiVersion() === 3) {
+                    $sane_data['apiv3_subscribe_field_key'] = $this->api->getSubscribeFieldKey();
+                }
+
+            }
 
             return $sane_data;
 
