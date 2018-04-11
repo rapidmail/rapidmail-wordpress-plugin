@@ -89,12 +89,16 @@
          */
         public function widget($args, $instance) {
 
+            $rapidmail = Rapidmail::instance();
+
+            $args['rm_is_api_configured'] = $rapidmail->getApi()->isConfigured();
+
             $template = new Template();
             $template->assign([
                 'instance' => (array)$instance,
                 'settings' => $args,
                 'widget' => $this,
-                'options' => Rapidmail::instance()->getOptions()
+                'options' => $rapidmail->getOptions()
             ]);
 
             $template->display('widget');
