@@ -13,27 +13,61 @@
         private $apiclient;
 
         /**
+         * @var int
+         */
+        private $nodeId;
+
+        /**
+         * @var int
+         */
+        private $recipientlistId;
+
+        /**
+         * @var string
+         */
+        private $apiKey;
+
+        /**
          * Constructor
          *
-         * @param int $node_id
+         * @param int $nodeId
          * @param int $recipientlistId
-         * @param string $api_key
+         * @param string $apiKey
          */
-        public function __construct($node_id, $recipientlistId, $api_key) {
+        public function __construct($nodeId, $recipientlistId, $apiKey) {
+
+            $this->nodeId = $nodeId;
+            $this->recipientlistId = $recipientlistId;
+            $this->apiKey = $apiKey;
+
+        }
+
+        /**
+         * Return apiclient
+         *
+         * @return null|\rapidmail_apiclient
+         */
+        private function apiclient() {
+
+            if ($this->apiclient !== NULL) {
+                return $this->apiclient;
+            }
 
             try {
 
                 require_once __DIR__ . '/../../vendor/rapidmail/rapidmail_apiclient.class.php';
 
-                $this->apiclient = new \rapidmail_apiclient(
-                    (int)$node_id,
-                    (int)$recipientlistId,
-                    (string)$api_key
+                return $this->apiclient = new \rapidmail_apiclient(
+                    (int)$this->nodeId,
+                    (int)$this->recipientlistId,
+                    (string)$this->apiKey
                 );
 
             } catch (\Exception $e) {
                 // Ignore
             }
+
+            return NULL;
 
         }
 
@@ -41,7 +75,7 @@
          * @inheritdoc
          */
         public function isConfigured() {
-            return $this->apiclient !== NULL;
+            return !empty($this->nodeId) && !empty($this->recipientlistId) && !empty($this->apiKey);
         }
 
         /**
@@ -68,7 +102,7 @@
             }
 
             try {
-                return $this->apiclient->get_metadata();
+                return $this->apiclient()->get_metadata();
             } catch (\Exception $e) {
                 return null;
             }
@@ -87,7 +121,7 @@
             $recipientData['activationmail'] = 'yes';
 
             try {
-                $this->apiclient->add_recipient($email, $recipientData);
+                $this->apiclient()->add_recipient($email, $recipientData);
             } catch (\Exception $e) {
                 return null;
             }
