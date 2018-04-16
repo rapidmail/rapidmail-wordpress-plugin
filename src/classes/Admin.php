@@ -350,13 +350,13 @@
                     return $links;
                 }
 
-                $settings_link = sprintf(
+                $settings_link = \sprintf(
                     '<a href="%1$s">%2$s</a>',
-                    menu_page_url('rapidmail', false),
-                    esc_html__('Settings', Rapidmail::TEXT_DOMAIN)
+                    \menu_page_url('rapidmail', false),
+                    \esc_html__('Settings', Rapidmail::TEXT_DOMAIN)
                 );
 
-                array_unshift( $links, $settings_link );
+                \array_unshift( $links, $settings_link );
 
                 return $links;
 
