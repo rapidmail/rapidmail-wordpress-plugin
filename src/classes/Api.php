@@ -3,7 +3,7 @@
     namespace Rapidmail;
 
     use Rapidmail\Api\AdapterInterface;
-    use Rapidmail\Api\Apiv2;
+    use Rapidmail\Api\Apiv1;
     use Rapidmail\Api\Apiv3;
 
     /**
@@ -51,16 +51,16 @@
         /**
          * Get current adapter instance
          *
-         * @return AdapterInterface|Apiv2|Apiv3
+         * @return AdapterInterface|Apiv1|Apiv3
          */
         public function adapter() {
 
             if ($this->adapter === NULL) {
 
                 switch ($this->options->getApiVersion()) {
-                    case 2:
+                    case AdapterInterface::API_V1:
 
-                        $this->adapter = new Apiv2(
+                        $this->adapter = new Apiv1(
                             $this->options->get('node_id'),
                             $this->options->get('recipient_list_id'),
                             $this->options->get('api_key')
@@ -68,7 +68,7 @@
 
                         break;
 
-                    case 3:
+                    case AdapterInterface::API_V3:
 
                         $this->adapter = new Apiv3(
                             $this->options->get('apiv3_username'),
@@ -115,10 +115,10 @@
 
             switch ($this->options->getApiVersion()) {
 
-                case 2:
+                case AdapterInterface::API_V1:
                     return $recipientlist['api_data']['metadata']['subscription_form_url'];
 
-                case 3:
+                case AdapterInterface::API_V3:
                     return $recipientlist['subscribe_form_url'];
 
             }
@@ -133,7 +133,7 @@
          */
         public function getSubscribeFieldKey($recipientlistId = null) {
 
-            if ($this->options->getApiVersion() === 2) {
+            if ($this->options->getApiVersion() === AdapterInterface::API_V1) {
                 return NULL;
             }
 

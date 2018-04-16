@@ -2,6 +2,8 @@
 
     namespace Rapidmail;
 
+    use Rapidmail\Api\AdapterInterface;
+
     /**
      * rapidmail admin options
      */
@@ -93,13 +95,13 @@
 
             }
 
-            if ($sane_data['api_version'] === 2) {
+            if ($sane_data['api_version'] === AdapterInterface::API_V1) {
 
                 $sane_data['api_key'] = \sanitize_text_field($values['api_key']);
                 $sane_data['recipient_list_id'] = empty($values['recipient_list_id']) ? '' : \intval($values['recipient_list_id']);
                 $sane_data['node_id'] = empty($values['node_id']) ? '' : \intval($values['node_id']);
 
-            } elseif ($sane_data['api_version'] === 3) {
+            } elseif ($sane_data['api_version'] === AdapterInterface::API_V3) {
 
                 $sane_data['apiv3_username'] = \sanitize_text_field($values['apiv3_username']);
                 $sane_data['apiv3_password'] = \sanitize_text_field($values['apiv3_password']);
@@ -136,7 +138,7 @@
 
                 $sane_data['subscribe_form_url'] = $this->api->getSubscribeFormUrl();
 
-                if ($this->options->getApiVersion() === 3) {
+                if ($this->options->getApiVersion() === AdapterInterface::API_V3) {
                     $sane_data['apiv3_subscribe_field_key'] = $this->api->getSubscribeFieldKey();
                 }
 
@@ -175,15 +177,15 @@
                     $api_version = $this->options->getApiVersion();
 
                     echo '<select name="rm_options[api_version]" id="rm-api-version">
-                            <option value="2"' . ($api_version == 2 ? ' selected="selected"' : '') . '>' . \__('V2 (veraltet)', Rapidmail::TEXT_DOMAIN) . '</option>
-                            <option value="3"' . ($api_version == 3 ? ' selected="selected"' : '') . '>' . \__('V3', Rapidmail::TEXT_DOMAIN) . '</option>
+                            <option value="1"' . ($api_version === AdapterInterface::API_V1 ? ' selected="selected"' : '') . '>' . \__('V1 (veraltet)', Rapidmail::TEXT_DOMAIN) . '</option>
+                            <option value="3"' . ($api_version === AdapterInterface::API_V3 ? ' selected="selected"' : '') . '>' . \__('V3', Rapidmail::TEXT_DOMAIN) . '</option>
                           </select>';
                 },
                 'rapidmail',
                 'connection'
             );
 
-            if ($this->options->getApiVersion() == 2) {
+            if ($this->options->getApiVersion() === AdapterInterface::API_V1) {
 
                 \add_settings_field(
                     'api_key',
@@ -227,9 +229,9 @@
 
             }
 
-            if ($this->options->getApiVersion() == 3) {
+            if ($this->options->getApiVersion() === AdapterInterface::API_V1) {
 
-                add_settings_field(
+                \add_settings_field(
                     'apiv3_username',
                     \__('API-Benutzername', Rapidmail::TEXT_DOMAIN),
                     function() {

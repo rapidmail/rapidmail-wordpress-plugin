@@ -3,9 +3,9 @@
     namespace Rapidmail\Api;
 
     /**
-     * APIv2 adapter class
+     * APIv1 adapter class
      */
-    class Apiv2 implements AdapterInterface {
+    class Apiv1 implements AdapterInterface {
 
         /**
          * @var \rapidmail_apiclient

@@ -2,6 +2,8 @@
 
     namespace Rapidmail;
 
+    use Rapidmail\Api\AdapterInterface;
+
     /**
      * rapidmail options wrapper
      */
@@ -49,7 +51,7 @@
          * @return int
          */
         public function getApiVersion() {
-            return (int)$this->get('api_version', 2);
+            return (int)$this->get('api_version', AdapterInterface::API_V3);
         }
 
         /**
@@ -96,10 +98,10 @@
 
             switch ($this->getApiVersion()) {
 
-                case 2:
+                case AdapterInterface::API_V1:
                     return $this->get('recipient_list_id');
 
-                case 3:
+                case AdapterInterface::API_V3:
                     return $this->get('apiv3_recipientlist_id');
 
                 default:

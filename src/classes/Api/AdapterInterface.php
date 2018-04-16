@@ -5,6 +5,20 @@
     interface AdapterInterface {
 
         /**
+         * API version 2
+         *
+         * @var int
+         */
+        const API_V1 = 1;
+
+        /**
+         * API version 2
+         *
+         * @var int
+         */
+        const API_V3 = 3;
+
+        /**
          * Check if required settings for establishing a connection have been set
          *
          * @return bool
