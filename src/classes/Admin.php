@@ -229,7 +229,7 @@
 
             }
 
-            if ($this->options->getApiVersion() === AdapterInterface::API_V1) {
+            if ($this->options->getApiVersion() === AdapterInterface::API_V3) {
 
                 \add_settings_field(
                     'apiv3_username',
