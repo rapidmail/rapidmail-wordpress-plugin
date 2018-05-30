@@ -78,6 +78,10 @@ Weitere Informationen gibt es hier: https://www.rapidmail.de/preise
 
 == Changelog ==
 
+= 2.0.1 =
+* Add missing text domain parameter for translation
+* Fix use of wrong capability when adding settings menu that caused rapidmail settings to disappear with enabled security plugins
+
 = 2.0 =
 * Add support for rapidmail API v3
 * Add subscription form shortcode
