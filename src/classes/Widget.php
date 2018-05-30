@@ -136,16 +136,12 @@
 
                 \add_shortcode( 'rm_form', function($args) {
 
-                    if (empty($args)) {
-
-                        $args = array_merge([
-                            'show_firstname' => false,
-                            'show_lastname' => false,
-                            'show_gender' => false,
-                            'show_mailtype' => false
-                        ], $args);
-
-                    }
+                    $args = array_merge([
+                        'show_firstname' => false,
+                        'show_lastname' => false,
+                        'show_gender' => false,
+                        'show_mailtype' => false
+                    ], (empty($args) || !is_array($args) ? [] : $args));
 
                     $template = new Template();
                     $template->assign([
