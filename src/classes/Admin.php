@@ -38,7 +38,7 @@
             \add_options_page(
                 \__('rapidmail Options', Rapidmail::TEXT_DOMAIN),
                 'rapidmail',
-                'edit_plugins',
+                'manage_options',
                 'rapidmail',
                 [
                     $this,
