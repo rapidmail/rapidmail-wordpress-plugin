@@ -147,7 +147,7 @@
                 $label = $this->getOptions()->get('comment_subscription_label');
 
                 if (empty($label)) {
-                    $label = \__('Newsletter abonnieren (jederzeit wieder abbestellbar)');
+                    $label = \__('Newsletter abonnieren (jederzeit wieder abbestellbar)', self::TEXT_DOMAIN);
                 }
 
                 echo '<p class="comment-form-rm-subscribe">'
