@@ -3,7 +3,7 @@ Contributors: rapidmail GmbH
 Tags: rapidmail, email marketing, email marketing service provider
 Requires at least: 4.6
 Tested up to: 4.9.5
-Stable tag: 1.0
+Stable tag: 2.0.2
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ Weitere Informationen gibt es hier: https://www.rapidmail.de/preise
 3. Widget mit Newsletter Anmeldeformular
 
 == Changelog ==
+
+= 2.0.2 =
+* Fix an issue where a PHP warning was shown when enabling the plugin
 
 = 2.0.1 =
 * Add missing text domain parameter for translation
