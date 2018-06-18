@@ -19,7 +19,7 @@
          *
          * @var string
          */
-        const PLUGIN_VERSION = '2.0.2';
+        const PLUGIN_VERSION = '2.0.3';
 
         /**
          * @var Options
