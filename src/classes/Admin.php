@@ -82,7 +82,7 @@
             $sane_data = [];
             $sane_data['api_version'] = \intval($values['api_version']);
 
-            if (!\in_array($sane_data['api_version'], [2, 3], true)) {
+            if (!\in_array($sane_data['api_version'], [1, 3], true)) {
 
                 \add_settings_error(
                     Options::OPTION_KEY,
