@@ -50,4 +50,12 @@
          */
         public function subscribeRecipient($recipientlistId, array $recipientData);
 
+        /**
+         * Get list of form fields
+         *
+         * @param int $recipientlistId
+         * @return array|null
+         */
+        public function getFormFields($recipientlistId);
+
     }

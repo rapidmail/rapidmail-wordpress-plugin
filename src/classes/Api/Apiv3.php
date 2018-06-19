@@ -27,6 +27,11 @@
         /**
          * @var string
          */
+        const API_GET_FORM_FIELDS_RESOURCE = '/forms/%u-default';
+
+        /**
+         * @var string
+         */
         private $username;
 
         /**
@@ -216,6 +221,27 @@
 
             if (intval($response['http_response']->get_status()) === 201) {
                 return true;
+            }
+
+            return null;
+
+        }
+
+        /**
+         * @inheritdoc
+         */
+        public function getFormFields($recipientlistId)
+        {
+
+            $response = $this->request($this->url(self::API_GET_FORM_FIELDS_RESOURCE, [$recipientlistId]), [
+                'method' => 'GET',
+                'headers' => [
+                    'Content-Type' => 'application/json'
+                ]
+            ]);
+
+            if (!\is_wp_error($response) && intval($response['http_response']->get_status()) === 200) {
+                return \json_decode($response->get_data(), true)['fields'];
             }
 
             return null;
