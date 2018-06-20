@@ -29,7 +29,7 @@
                 </li>
             <?php elseif ($field_config['type'] === 'checkbox'): ?>
                 <li rel="<?php echo $field_name; ?>">
-                    <input type="checkbox" name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" value="yes"><label class="checkbox-label" for="<?php echo $field_name; ?>"><?php echo \esc_html($field_config['label']); ?></label>
+                    <label class="checkbox-label rm-<?php echo $field_name; ?>-error-after" for="<?php echo $field_name; ?>"><input type="checkbox" name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" value="yes"><?php echo \esc_html($field_config['label']); ?></label>
                 </li>
             <?php else: ?>
                 <li rel="<?php echo $field_name; ?>">
