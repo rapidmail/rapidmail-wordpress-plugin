@@ -30,6 +30,14 @@
         private function getDefaultFieldConfigs() {
 
             return [
+                'email' => [
+                    'type' => 'email',
+                    'label' => \__('E-Mail', Rapidmail::TEXT_DOMAIN),
+                    'constraints' => [
+                        'required' => true,
+                        'maxlength' => 255
+                    ]
+                ],
                 'firstname' => [
                     'type' => 'text',
                     'label' => \__('Vorname', Rapidmail::TEXT_DOMAIN),
