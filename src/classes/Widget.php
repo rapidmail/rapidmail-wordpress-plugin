@@ -27,7 +27,7 @@
          *
          * @return array
          */
-        private function getDefaultFieldConfigs() {
+        private static function getDefaultFieldConfigs() {
 
             return [
                 'email' => [
@@ -85,11 +85,11 @@
          *
          * @return array
          */
-        private function getFormConfig() {
+        private static function getFormConfig() {
 
             $fields = [];
 
-            foreach ($this->getRawFormConfig() as $fieldName => $fieldConfig) {
+            foreach (self::getRawFormConfig() as $fieldName => $fieldConfig) {
 
                 if ($fieldName === 'consent_text') {
                     $fieldConfig['label'] = \__('Text zur Einwilligung', Rapidmail::TEXT_DOMAIN);
@@ -110,7 +110,7 @@
          *
          * @return array
          */
-        private function getRawFormConfig() {
+        private static function getRawFormConfig() {
 
             $rapidmail = Rapidmail::instance();
             $options = $rapidmail->getOptions();
@@ -119,7 +119,7 @@
                 return $rapidmail->getApi()->getFormFields($options->getRecipientlistId());
             }
 
-            return $formConfig = $this->getDefaultFieldConfigs();
+            return $formConfig = self::getDefaultFieldConfigs();
 
         }
 
@@ -141,7 +141,7 @@
             </p>
             <?php
 
-            foreach ($this->getFormConfig() AS $id => $config) {
+            foreach (self::getFormConfig() AS $id => $config) {
             ?>
                 <p>
                     <input class="checkbox" type="checkbox" id="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>" name="<?php echo \esc_attr($this->get_field_name('show_' . $id)); ?>" <?php if ($args['show_' . $id] || $config['constraints']['required']) { ?> checked="checked" <?php } if ($config['constraints']['required']) { ?> disabled="disabled" title="<?php \_e('Pflichtfeld', Rapidmail::TEXT_DOMAIN); ?>"<?php } ?>/>
@@ -158,10 +158,10 @@
         public function update($new_instance, $instance) {
 
             $instance['title'] = isset($new_instance['title']) ? \wp_strip_all_tags($new_instance['title']) : '';
-            $formConfig = $this->getRawFormConfig();
+            $formConfig = self::getFormConfig();
 
-            foreach ($this->getFormConfig() AS $checkbox => $title) {
-                $instance['show_' . $checkbox] = isset($new_instance['show_' . $checkbox]) || !empty($formConfig[$checkbox]['constraints']['required']);
+            foreach ($formConfig AS $checkbox => $title) {
+                $instance['show_' . $checkbox] = isset($new_instance['show_' . $checkbox]) || !empty($rawFormConfig[$checkbox]['constraints']['required']);
             }
 
             return $instance;
@@ -183,7 +183,7 @@
                 'settings' => $args,
                 'widget' => $this,
                 'options' => $rapidmail->getOptions(),
-                'form_config' => $this->getRawFormConfig()
+                'form_config' => self::getRawFormConfig()
             ]);
 
             $template->display('widget');
@@ -235,7 +235,8 @@
                         'widget' => (object)[
                             'number' => uniqid()
                         ],
-                        'options' => Rapidmail::instance()->getOptions()
+                        'options' => Rapidmail::instance()->getOptions(),
+                        'form_config' => self::getRawFormConfig()
                     ]);
 
                     $template->display('shortcode');
