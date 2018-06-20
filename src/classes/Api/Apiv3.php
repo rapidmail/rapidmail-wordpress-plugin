@@ -241,7 +241,7 @@
             ]);
 
             if (!\is_wp_error($response) && intval($response['http_response']->get_status()) === 200) {
-                return \json_decode($response->get_data(), true)['fields'];
+                return \json_decode($response['http_response']->get_data(), true)['fields'];
             }
 
             return null;
