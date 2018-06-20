@@ -53,7 +53,7 @@
          */
         public function showOptionsPage() {
 
-            $link = '<a href="https://www.rapidmail.de/anmelden?pid=125&utm_source=wp-plugin&utm_medium=Plugin&utm_campaign=Wordpress" target="_blank">' . \__('Jetzt kostenlos bei rapidmail anmelden!', Rapidmail::TEXT_DOMAIN) . '</a>';
+            $link = '<a href="https://www.rapidmail.de/wordpress-plugin/lp?pid=o-wp&tid2=wpplugin&version=' . Rapidmail::PLUGIN_VERSION . '" target="_blank">' . \__('Jetzt kostenlos bei rapidmail anmelden!', Rapidmail::TEXT_DOMAIN) . '</a>';
 
             ?>
             <div class="wrap">
@@ -103,6 +103,7 @@
 
             } elseif ($sane_data['api_version'] === AdapterInterface::API_V3) {
 
+                $sane_data['apiv3_automatic_fields'] = (int)!empty($values['apiv3_automatic_fields']);
                 $sane_data['apiv3_username'] = \sanitize_text_field($values['apiv3_username']);
                 $sane_data['apiv3_password'] = \sanitize_text_field($values['apiv3_password']);
 
@@ -174,11 +175,11 @@
                 \__('API-Version', Rapidmail::TEXT_DOMAIN),
                 function() {
 
-                    $api_version = $this->options->getApiVersion();
+                    $apiVersion = $this->options->getApiVersion();
 
                     echo '<select name="rm_options[api_version]" id="rm-api-version">
-                            <option value="1"' . ($api_version === AdapterInterface::API_V1 ? ' selected="selected"' : '') . '>' . \__('V1 (veraltet)', Rapidmail::TEXT_DOMAIN) . '</option>
-                            <option value="3"' . ($api_version === AdapterInterface::API_V3 ? ' selected="selected"' : '') . '>' . \__('V3', Rapidmail::TEXT_DOMAIN) . '</option>
+                            <option value="1"' . ($apiVersion === AdapterInterface::API_V1 ? ' selected="selected"' : '') . '>' . \__('V1 (veraltet)', Rapidmail::TEXT_DOMAIN) . '</option>
+                            <option value="3"' . ($apiVersion === AdapterInterface::API_V3 ? ' selected="selected"' : '') . '>' . \__('V3', Rapidmail::TEXT_DOMAIN) . '</option>
                           </select>';
                 },
                 'rapidmail',
@@ -289,6 +290,28 @@
                     'rapidmail',
                     'connection'
                 );
+
+                if ($this->options->wasInstalledBefore210() && $this->api->isAuthenticated()) {
+
+                    $automaticFields = $this->options->get('apiv3_automatic_fields', 0);
+
+                    \add_settings_field(
+                        'apiv3_automatic_fields',
+                        \__('Felder automatisch per API', Rapidmail::TEXT_DOMAIN),
+                        function() use($automaticFields) {
+
+                            echo '<fieldset>';
+                                echo '<legend class="screen-reader-text">' . \__('Felder automatisch per API', Rapidmail::TEXT_DOMAIN) . '</legend>';
+                                echo '<label for="apiv3_automatic_fields_yes"><input type="radio" name="apiv3_automatic_fields" id="apiv3_automatic_fields_yes" value="1"' . ($automaticFields === 1 ? ' checked="checked"' : '') . '> ' . \__('Ja', Rapidmail::TEXT_DOMAIN) . '</label><br>';
+                                echo '<label for="apiv3_automatic_fields_no"><input type="radio" name="apiv3_automatic_fields" id="apiv3_automatic_fields_no" value="0"' . ($automaticFields === 0 ? ' checked="checked"' : '') . '> ' . \__('Nein', Rapidmail::TEXT_DOMAIN) . '</label>';
+                            echo '</fieldset>';
+
+                        },
+                        'rapidmail',
+                        'connection'
+                    );
+
+                }
 
             }
 
