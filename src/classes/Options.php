@@ -74,6 +74,7 @@
          * Save options
          */
         public function save() {
+            $this->options['current_version'] = Rapidmail::PLUGIN_VERSION;
             \update_option('rm_options', $this->options);
         }
 
