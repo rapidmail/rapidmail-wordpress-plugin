@@ -104,7 +104,6 @@
          */
         private function getRawFormConfig() {
 
-
             $rapidmail = Rapidmail::instance();
             $options = $rapidmail->getOptions();
 
@@ -175,7 +174,8 @@
                 'instance' => (array)$instance,
                 'settings' => $args,
                 'widget' => $this,
-                'options' => $rapidmail->getOptions()
+                'options' => $rapidmail->getOptions(),
+                'form_config' => $this->getRawFormConfig()
             ]);
 
             $template->display('widget');

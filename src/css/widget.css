@@ -47,3 +47,7 @@
     height: 20px;
     margin: 5px 5px 0;
 }
+
+.rm-form label.checkbox-label {
+    font-weight: normal;
+}
