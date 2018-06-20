@@ -160,4 +160,12 @@
             $this->adapter = NULL;
         }
 
+        /**
+         * @inheritdoc
+         */
+        public function getFormFields($recipientlistId)
+        {
+            return $this->adapter()->getFormFields($recipientlistId);
+        }
+
     }

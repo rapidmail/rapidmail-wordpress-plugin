@@ -27,7 +27,7 @@
          *
          * @return array
          */
-        private function get_checkbox_configs() {
+        private function getCheckboxConfigs() {
 
             return [
                 'firstname' => \__('Vorname anzeigen', Rapidmail::TEXT_DOMAIN),
@@ -58,7 +58,7 @@
 
 
 
-            foreach ($this->get_checkbox_configs() AS $id => $title) {
+            foreach ($this->getCheckboxConfigs() AS $id => $title) {
             ?>
                 <p>
                     <input class="checkbox" type="checkbox" id="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>" name="<?php echo \esc_attr($this->get_field_name('show_' . $id)); ?>" <?php if ($args['show_' . $id]) { ?> checked="checked" <?php } ?>/>
@@ -76,7 +76,7 @@
 
             $instance['title'] = isset($new_instance['title']) ? \wp_strip_all_tags($new_instance['title']) : '';
 
-            foreach ($this->get_checkbox_configs() AS $checkbox => $title) {
+            foreach ($this->getCheckboxConfigs() AS $checkbox => $title) {
                 $instance['show_' . $checkbox] = isset( $new_instance['show_' . $checkbox] );
             }
 
