@@ -72,20 +72,16 @@
 
         }
 
+        /**
+         * Get form config depending on API and config
+         *
+         * @return array
+         */
         private function getFormConfig() {
-
-            $rapidmail = Rapidmail::instance();
-            $options = $rapidmail->getOptions();
-
-            if ($options->getApiVersion() === Api::API_V3 && $options->get('apiv3_automatic_fields') === 1) {
-                $formConfig = $rapidmail->getApi()->getFormFields($options->getRecipientlistId());
-            } else {
-                $formConfig = $this->getDefaultFieldConfigs();
-            }
 
             $fields = [];
 
-            foreach ($formConfig as $fieldName => $fieldConfig) {
+            foreach ($this->getRawFormConfig() as $fieldName => $fieldConfig) {
 
                 if ($fieldName === 'consent_text') {
                     $fieldConfig['label'] = \__('Text zur Einwilligung', Rapidmail::TEXT_DOMAIN);
@@ -98,6 +94,25 @@
             }
 
             return $fields;
+
+        }
+
+        /**
+         * Get raw form config
+         *
+         * @return array
+         */
+        private function getRawFormConfig() {
+
+
+            $rapidmail = Rapidmail::instance();
+            $options = $rapidmail->getOptions();
+
+            if ($options->getApiVersion() === Api::API_V3 && $options->get('apiv3_automatic_fields') === 1) {
+                return $rapidmail->getApi()->getFormFields($options->getRecipientlistId());
+            }
+
+            return $formConfig = $this->getDefaultFieldConfigs();
 
         }
 
