@@ -151,9 +151,10 @@
         public function update($new_instance, $instance) {
 
             $instance['title'] = isset($new_instance['title']) ? \wp_strip_all_tags($new_instance['title']) : '';
+            $formConfig = $this->getRawFormConfig();
 
             foreach ($this->getFormConfig() AS $checkbox => $title) {
-                $instance['show_' . $checkbox] = isset( $new_instance['show_' . $checkbox] );
+                $instance['show_' . $checkbox] = isset($new_instance['show_' . $checkbox]) || !empty($formConfig[$checkbox]['constraints']['required']);
             }
 
             return $instance;
