@@ -12,6 +12,13 @@
     class Api implements AdapterInterface {
 
         /**
+         * Maximum age of API field cache
+         *
+         * @var int
+         */
+        const API_FIELDS_CACHE_MAXAGE_SECONDS = 120;
+
+        /**
          * @var Options
          */
         private $options;
@@ -165,7 +172,24 @@
          */
         public function getFormFields($recipientlistId)
         {
-            return $this->adapter()->getFormFields($recipientlistId);
+
+            $cacheFilePath = get_temp_dir() . 'rapidmail_fields.php';
+            $cacheData = null;
+
+            if (!is_file($cacheFilePath) || (time() - filemtime($cacheFilePath)) > self::API_FIELDS_CACHE_MAXAGE_SECONDS) {
+
+                $cacheData = $this->adapter()->getFormFields($recipientlistId);
+
+                if (false === file_put_contents($cacheFilePath, '<?php return '. var_export($cacheData, true) . ';')) {
+                    throw new \RuntimeException('File "' . $cacheFilePath . '" could not be written');
+                }
+
+            } else {
+                $cacheData = require $cacheFilePath;
+            }
+
+            return $cacheData;
+
         }
 
     }
