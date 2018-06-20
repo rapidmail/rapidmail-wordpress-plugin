@@ -128,4 +128,12 @@
 
         }
 
+        /**
+         * @inheritdoc
+         */
+        public function getFormFields($recipientlistId)
+        {
+            throw new \RuntimeException('Feature not supported by APIv1');
+        }
+
     }

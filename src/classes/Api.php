@@ -12,6 +12,13 @@
     class Api implements AdapterInterface {
 
         /**
+         * Maximum age of API field cache
+         *
+         * @var int
+         */
+        const API_FIELDS_CACHE_MAXAGE_SECONDS = 120;
+
+        /**
          * @var Options
          */
         private $options;
@@ -158,6 +165,41 @@
         public function reset() {
             unset($this->adapter);
             $this->adapter = NULL;
+        }
+
+        /**
+         * @inheritdoc
+         */
+        public function getFormFields($recipientlistId)
+        {
+
+            $cacheFilePath = $this->options->get('fieldcache_file_path');
+
+            if ($cacheFilePath === null) {
+                $cacheFilePath = wp_unique_filename(get_temp_dir(), 'rapidmail_fields_' . uniqid() . '.json');
+                $this->options->set('fieldcache_file_path', $cacheFilePath);
+                $this->options->save();
+
+            }
+
+            $cacheFilePath = get_temp_dir() . $cacheFilePath;
+
+            $cacheData = null;
+
+            if (!is_file($cacheFilePath) || (time() - filemtime($cacheFilePath)) > self::API_FIELDS_CACHE_MAXAGE_SECONDS) {
+
+                $cacheData = $this->adapter()->getFormFields($recipientlistId);
+
+                if (false === file_put_contents($cacheFilePath,  json_encode($cacheData))) {
+                    throw new \RuntimeException('File "' . $cacheFilePath . '" could not be written');
+                }
+
+            } else {
+                $cacheData = json_decode(file_get_contents($cacheFilePath), true);
+            }
+
+            return $cacheData;
+
         }
 
     }

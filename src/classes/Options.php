@@ -74,6 +74,7 @@
          * Save options
          */
         public function save() {
+            $this->options['current_version'] = Rapidmail::PLUGIN_VERSION;
             \update_option('rm_options', $this->options);
         }
 
@@ -108,6 +109,23 @@
                     throw new \Exception('Invalid API version');
 
             }
+
+        }
+
+        /**
+         * Check if plugin was installed before plugin version 2.1.0
+         *
+         * @return bool
+         */
+        public function wasInstalledBefore210() {
+
+            $initialVersion = $this->get('initial_version');
+
+            if ($initialVersion === NULL) {
+                return true;
+            }
+
+            return version_compare($initialVersion, '2.1.0', '<=');
 
         }
 

@@ -19,7 +19,7 @@
          *
          * @var string
          */
-        const PLUGIN_VERSION = '2.0.3';
+        const PLUGIN_VERSION = '2.1.0';
 
         /**
          * @var Options
@@ -64,6 +64,8 @@
             $this->loadConfig();
             $this->registerAutoloader();
 
+            \register_activation_hook(RAPIDMAIL_PLUGIN, [$this, 'onActivate']);
+
             if (\is_admin()) {
                 $admin = new Admin($this->getOptions(), $this->getApi());
                 $admin->init();
@@ -75,6 +77,31 @@
 
             if ($this->getOptions()->get('comment_subscription_active')) {
                 $this->addCommentFormCheckbox();
+            }
+
+        }
+
+        /**
+         * Hook that is executed when plugin is first activated
+         */
+        public function onActivate() {
+
+            if (!$this->options->get('initial_version', false)) {
+
+                // If initial version is not set, we need to set it
+
+                if ($this->options->get('api_version') === NULL) {
+                    // No config was found yet, assume this is the first activation
+                    $initialVersion = self::PLUGIN_VERSION;
+                } else {
+                    // Config is already there, we assume initial version was 2.0
+                    $initialVersion = '2.0.0';
+                }
+
+                $this->options->set('initial_version', $initialVersion);
+                $this->options->save();
+                $this->options->update();
+
             }
 
         }
