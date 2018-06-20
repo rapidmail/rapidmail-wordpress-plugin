@@ -302,8 +302,8 @@
 
                             echo '<fieldset>';
                                 echo '<legend class="screen-reader-text">' . \__('Felder automatisch per API', Rapidmail::TEXT_DOMAIN) . '</legend>';
-                                echo '<label for="apiv3_automatic_fields_yes"><input type="radio" name="apiv3_automatic_fields" id="apiv3_automatic_fields_yes" value="1"' . ($automaticFields === 1 ? ' checked="checked"' : '') . '> ' . \__('Ja', Rapidmail::TEXT_DOMAIN) . '</label><br>';
-                                echo '<label for="apiv3_automatic_fields_no"><input type="radio" name="apiv3_automatic_fields" id="apiv3_automatic_fields_no" value="0"' . ($automaticFields === 0 ? ' checked="checked"' : '') . '> ' . \__('Nein', Rapidmail::TEXT_DOMAIN) . '</label>';
+                                echo '<label for="apiv3_automatic_fields_yes"><input type="radio" name="rm_options[apiv3_automatic_fields]" id="apiv3_automatic_fields_yes" value="1"' . ($automaticFields === 1 ? ' checked="checked"' : '') . '> ' . \__('Ja', Rapidmail::TEXT_DOMAIN) . '</label><br>';
+                                echo '<label for="apiv3_automatic_fields_no"><input type="radio" name="rm_options[apiv3_automatic_fields]" id="apiv3_automatic_fields_no" value="0"' . ($automaticFields === 0 ? ' checked="checked"' : '') . '> ' . \__('Nein', Rapidmail::TEXT_DOMAIN) . '</label>';
                             echo '</fieldset>';
 
                         },

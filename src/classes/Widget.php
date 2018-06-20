@@ -27,14 +27,77 @@
          *
          * @return array
          */
-        private function getCheckboxConfigs() {
+        private function getDefaultFieldConfigs() {
 
             return [
-                'firstname' => \__('Vorname anzeigen', Rapidmail::TEXT_DOMAIN),
-                'lastname' => \__('Nachname anzeigen', Rapidmail::TEXT_DOMAIN),
-                'gender' => \__('Anrede anzeigen', Rapidmail::TEXT_DOMAIN),
-                'mailtype' => \__('Format anzeigen', Rapidmail::TEXT_DOMAIN)
+                'firstname' => [
+                    'type' => 'text',
+                    'label' => \__('Vorname', Rapidmail::TEXT_DOMAIN),
+                    'constraints' => [
+                        'required' => false,
+                        'maxlength' => 255
+                    ]
+                ],
+                'lastname' => [
+                    'type' => 'text',
+                    'label' => \__('Nachname', Rapidmail::TEXT_DOMAIN),
+                    'constraints' => [
+                        'required' => false,
+                        'maxlength' => 255
+                    ]
+                ],
+                'gender' => [
+                    'type' => 'radio',
+                    'constraints' => [
+                        'required' => false
+                    ],
+                    'label' => \__('Anrede', Rapidmail::TEXT_DOMAIN),
+                    'values' => [
+                        'male' => \__('männlich'),
+                        'female' => \__('weiblich')
+                    ]
+                ],
+                'mailtype' => [
+                    'label' => \__('Format', Rapidmail::TEXT_DOMAIN),
+                    'type' => 'radio',
+                    'constraints' => [
+                        'required' => false
+                    ],
+                    'values' => [
+                        'html' => \__('HTML'),
+                        'text' => \__('Text')
+                    ]
+                ]
             ];
+
+        }
+
+        private function getFormConfig() {
+
+            $rapidmail = Rapidmail::instance();
+            $options = $rapidmail->getOptions();
+
+            if ($options->getApiVersion() === Api::API_V3 && $options->get('apiv3_automatic_fields') === 1) {
+                $formConfig = $rapidmail->getApi()->getFormFields($options->getRecipientlistId());
+            } else {
+                $formConfig = $this->getDefaultFieldConfigs();
+            }
+
+            $fields = [];
+
+            foreach ($formConfig as $fieldName => $fieldConfig) {
+
+                if ($fieldName === 'consent_text') {
+                    $fieldConfig['label'] = \__('Text zur Einwilligung', Rapidmail::TEXT_DOMAIN);
+                }
+
+                if ($fieldName !== 'captcha' && $fieldConfig['type'] !== 'honeypot') {
+                    $fields[$fieldName] = $fieldConfig;
+                }
+
+            }
+
+            return $fields;
 
         }
 
@@ -44,7 +107,7 @@
         public function form($instance) {
 
             $defaults = [
-                'title' => ''
+                'title' => \__('Newsletter Anmeldung', Rapidmail::TEXT_DOMAIN)
             ];
 
             $args = \wp_parse_args((array)$instance, $defaults);
@@ -56,13 +119,11 @@
             </p>
             <?php
 
-
-
-            foreach ($this->getCheckboxConfigs() AS $id => $title) {
+            foreach ($this->getFormConfig() AS $id => $config) {
             ?>
                 <p>
-                    <input class="checkbox" type="checkbox" id="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>" name="<?php echo \esc_attr($this->get_field_name('show_' . $id)); ?>" <?php if ($args['show_' . $id]) { ?> checked="checked" <?php } ?>/>
-                    <label for="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>"><?php echo $title; ?></label>
+                    <input class="checkbox" type="checkbox" id="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>" name="<?php echo \esc_attr($this->get_field_name('show_' . $id)); ?>" <?php if ($args['show_' . $id] || $config['constraints']['required']) { ?> checked="checked" <?php } if ($config['constraints']['required']) { ?> disabled="disabled" title="<?php \_e('Pflichtfeld', Rapidmail::TEXT_DOMAIN); ?>"<?php } ?>/>
+                    <label for="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>"><?php echo $config['label']; ?></label>
                 </p>
             <?php
             }
@@ -76,7 +137,7 @@
 
             $instance['title'] = isset($new_instance['title']) ? \wp_strip_all_tags($new_instance['title']) : '';
 
-            foreach ($this->getCheckboxConfigs() AS $checkbox => $title) {
+            foreach ($this->getFormConfig() AS $checkbox => $title) {
                 $instance['show_' . $checkbox] = isset( $new_instance['show_' . $checkbox] );
             }
 
