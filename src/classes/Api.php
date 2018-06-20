@@ -173,19 +173,29 @@
         public function getFormFields($recipientlistId)
         {
 
-            $cacheFilePath = get_temp_dir() . 'rapidmail_fields.php';
+            $cacheFilePath = $this->options->get('fieldcache_file_path');
+
+            if ($cacheFilePath === null) {
+                $cacheFilePath = wp_unique_filename(get_temp_dir(), 'rapidmail_fields_' . uniqid() . '.json');
+                $this->options->set('fieldcache_file_path', $cacheFilePath);
+                $this->options->save();
+
+            }
+
+            $cacheFilePath = get_temp_dir() . $cacheFilePath;
+
             $cacheData = null;
 
             if (!is_file($cacheFilePath) || (time() - filemtime($cacheFilePath)) > self::API_FIELDS_CACHE_MAXAGE_SECONDS) {
 
                 $cacheData = $this->adapter()->getFormFields($recipientlistId);
 
-                if (false === file_put_contents($cacheFilePath, '<?php return '. var_export($cacheData, true) . ';')) {
+                if (false === file_put_contents($cacheFilePath,  json_encode($cacheData))) {
                     throw new \RuntimeException('File "' . $cacheFilePath . '" could not be written');
                 }
 
             } else {
-                $cacheData = require $cacheFilePath;
+                $cacheData = json_decode(file_get_contents($cacheFilePath), true);
             }
 
             return $cacheData;
