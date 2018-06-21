@@ -99,13 +99,14 @@
 
             if ($sane_data['api_version'] === AdapterInterface::API_V1) {
 
+                $sane_data['apiv3_automatic_fields'] = 0;
                 $sane_data['api_key'] = \sanitize_text_field($values['api_key']);
                 $sane_data['recipient_list_id'] = empty($values['recipient_list_id']) ? '' : \intval($values['recipient_list_id']);
                 $sane_data['node_id'] = empty($values['node_id']) ? '' : \intval($values['node_id']);
 
             } elseif ($sane_data['api_version'] === AdapterInterface::API_V3) {
 
-                $sane_data['apiv3_automatic_fields'] = (int)!empty($values['apiv3_automatic_fields']);
+                $sane_data['apiv3_automatic_fields'] = (int)(!$this->options->wasInstalledBefore210() || !empty($values['apiv3_automatic_fields']));
                 $sane_data['apiv3_username'] = \sanitize_text_field($values['apiv3_username']);
                 $sane_data['apiv3_password'] = \sanitize_text_field($values['apiv3_password']);
 
