@@ -19,7 +19,7 @@
          *
          * @var string
          */
-        const PLUGIN_VERSION = '2.1.0-beta1';
+        const PLUGIN_VERSION = '2.1.0-rc1';
 
         /**
          * @var Options
@@ -64,7 +64,7 @@
             $this->loadConfig();
             $this->registerAutoloader();
 
-            \register_activation_hook(RAPIDMAIL_PLUGIN, [$this, 'onActivate']);
+            $this->updateInitialVersion();
 
             if (\is_admin()) {
                 $admin = new Admin($this->getOptions(), $this->getApi());
@@ -82,25 +82,29 @@
         }
 
         /**
-         * Hook that is executed when plugin is first activated
+         * Update initial version option
          */
-        public function onActivate() {
+        private function updateInitialVersion() {
 
-            if (!$this->options->get('initial_version', false)) {
+            $options = $this->getOptions();
+
+            if (!$options->get('initial_version', false)) {
 
                 // If initial version is not set, we need to set it
 
-                if ($this->options->get('api_version') === NULL) {
+                if ($options->get('api_version') === NULL) {
                     // No config was found yet, assume this is the first activation
                     $initialVersion = self::PLUGIN_VERSION;
+                    $options->set('apiv3_automatic_fields', 1);
                 } else {
                     // Config is already there, we assume initial version was 2.0
                     $initialVersion = '2.0.0';
+                    $options->set('apiv3_automatic_fields', 0);
                 }
 
-                $this->options->set('initial_version', $initialVersion);
-                $this->options->save();
-                $this->options->update();
+                $options->set('initial_version', $initialVersion);
+                $options->save();
+                $options->update();
 
             }
 
