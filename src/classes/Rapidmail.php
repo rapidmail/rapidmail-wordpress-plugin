@@ -90,17 +90,16 @@
 
             if (!$options->get('initial_version', false)) {
 
-                $options->set('apiv3_automatic_fields', 0);
-
                 // If initial version is not set, we need to set it
 
                 if ($options->get('api_version') === NULL) {
                     // No config was found yet, assume this is the first activation
                     $initialVersion = self::PLUGIN_VERSION;
+                    $options->set('apiv3_automatic_fields', 1);
                 } else {
                     // Config is already there, we assume initial version was 2.0
                     $initialVersion = '2.0.0';
-                    $options->set('apiv3_automatic_fields', 1);
+                    $options->set('apiv3_automatic_fields', 0);
                 }
 
                 $options->set('initial_version', $initialVersion);
