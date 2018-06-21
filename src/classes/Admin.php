@@ -61,7 +61,7 @@ class Admin {
             <p><?php \printf(\__('Bitte hinterlegen Sie hier Ihre rapidmail API Zugangsdaten. Wenn Sie noch kein Kunde bei rapidmail sind, können Sie sich hier kostenlos anmelden: %s', Rapidmail::TEXT_DOMAIN), $link); ?></p>
             <?php if ($this->options->getApiVersion() === 1): ?>
                 <p style="color: #807359; border: 1px solid #e5cfa1; padding: 5px 5px 5px 35px; background: #fcf4e3 url(<?php echo \esc_url(\admin_url('images/no.png' )); ?>) no-repeat 10px center;">
-                    <?php echo \__('Sie Verwenden zur Zeit die veraltete Version 1 der rapidmail API. Um den vollen Funktionsumfang sowie regelmäßige Updates dieses Plugins genießen zu können, sollten Sie in Zukunft auf die Version 3 der rapidmail API umstellen. Das ist mit wenigen Klicks im Kundenbereich von rapidmail möglich.', Rapidmail::TEXT_DOMAIN); ?>
+                    <?php echo \__('Sie verwenden zurzeit die veraltete Version 1 der rapidmail API. Um den vollen Funktionsumfang sowie regelmäßige Updates dieses Plugins genießen zu können, sollten Sie in Zukunft auf die Version 3 der rapidmail API umstellen. Das ist mit wenigen Klicks im Kundenbereich von rapidmail möglich.', Rapidmail::TEXT_DOMAIN); ?>
                 </p>
             <?php endif; ?>
             <form method="post" action="options.php">
