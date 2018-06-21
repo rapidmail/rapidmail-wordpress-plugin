@@ -81,6 +81,8 @@
 
             $sane_data = [];
             $sane_data['api_version'] = \intval($values['api_version']);
+            $sane_data['version'] = isset($values['version']) ? $values['version'] : Rapidmail::PLUGIN_VERSION;
+            $sane_data['initial_version'] = isset($values['initial_version']) ? $values['initial_version'] : Rapidmail::PLUGIN_VERSION;
 
             if (!\in_array($sane_data['api_version'], [1, 3], true)) {
 
