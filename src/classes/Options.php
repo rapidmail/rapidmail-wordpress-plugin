@@ -125,7 +125,7 @@
                 return true;
             }
 
-            return version_compare($initialVersion, '2.1.0', '<=');
+            return version_compare($initialVersion, '2.1.0-beta1', '<');
 
         }
 
