@@ -99,7 +99,6 @@
 
             if ($sane_data['api_version'] === AdapterInterface::API_V1) {
 
-                $sane_data['apiv3_automatic_fields'] = 0;
                 $sane_data['api_key'] = \sanitize_text_field($values['api_key']);
                 $sane_data['recipient_list_id'] = empty($values['recipient_list_id']) ? '' : \intval($values['recipient_list_id']);
                 $sane_data['node_id'] = empty($values['node_id']) ? '' : \intval($values['node_id']);
