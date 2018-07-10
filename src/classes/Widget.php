@@ -239,7 +239,7 @@
                         'form_config' => self::getRawFormConfig()
                     ]);
 
-                    $template->display('shortcode');
+                    return $template->render('shortcode');
 
                 });
             }
