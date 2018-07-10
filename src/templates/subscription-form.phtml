@@ -7,7 +7,7 @@
 
             <?php foreach ($form_config as $field_name => $field_config): ?>
 
-                <?php if ((empty($instance['show_' . $field_name]) && empty($field_config['constraints']['required'])) || in_array($field_name, ['captcha'])): continue; endif; ?>
+                <?php if ((empty($instance['show_' . $field_name]) && empty($field_config['constraints']['required'])) || in_array($field_name, ['captcha', 'submit'])): continue; endif; ?>
 
                 <?php if ($field_config['type'] === 'honeypot'): ?>
                     <li style="position:absolute; z-index: -100; left:-6000px;" aria-hidden="true">
@@ -46,7 +46,11 @@
             <?php endforeach; ?>
 
             <li rel="button">
-                <input type="submit" value="<?php \_e('Anmelden', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?>" autocomplete="off">
+                <?php if (isset($form_config['submit'])): ?>
+                    <input type="submit" value="<?php echo \esc_html($form_config['submit']['label']); ?>" autocomplete="off">
+                <?php else: ?>
+                    <input type="submit" value="<?php \_e('Anmelden', \Rapidmail\Rapidmail::TEXT_DOMAIN); ?>" autocomplete="off">
+                <?php endif; ?>
                 <div class="spinner" style="background:url(<?php echo includes_url('images/spinner.gif') ; ?>)"></div>
             </li>
         </ul>
