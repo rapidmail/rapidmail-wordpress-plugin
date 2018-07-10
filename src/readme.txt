@@ -3,7 +3,7 @@ Contributors: rapidmail GmbH
 Tags: rapidmail, newsletter, newsletter tool, newsletter software, email marketing, email marketing service provider
 Requires at least: 4.6
 Tested up to: 4.9.6
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ Weitere Informationen finden Sie hier: https://www.rapidmail.de/preise?pid=o-wp&
 5. Für Profis: Short-Code Integration verwenden
 
 == Changelog ==
+
+= 2.1.1 =
+* Fix shortcode always echoed at top of page, should now be inserted at correct position
+* Fix submit button label configured in rapidmail not being used in wordpress form
 
 = 2.1.0 =
 * Add support to use forms configured in rapidmail directly

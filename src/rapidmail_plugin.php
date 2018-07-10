@@ -3,7 +3,7 @@
      * Plugin Name: rapidmail newsletter marketing
      * Description: Widget für die Integration eines rapidmail Anmeldeformulars in der Sidebar sowie ein Plugin für die Gewinnung von Abonnenten über die Kommentarfunktion.
      * Author: rapidmail GmbH
-     * Version: 2.1.0
+     * Version: 2.1.1
      * Author URI: http://www.rapidmail.de
      * License: GPL2
      * License URI: http://www.gnu.org/licenses/gpl-2.0.html
