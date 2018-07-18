@@ -197,10 +197,14 @@
 
             \wp_enqueue_style('rapidmail-widget-css', \plugins_url('css/widget.css', __DIR__));
 
+            $options = Rapidmail::instance()->getOptions();
+            $errorMessage = $options->get('form_subscription_error_message');
+            $successMessage = $options->get('form_subscription_success_message');
+
             \wp_register_script('rapidmail-widget-js', \plugins_url('js/widget.js', __DIR__), ['jquery-core']);
             \wp_localize_script('rapidmail-widget-js', 'rmwidget', [
-                'msg_an_error_occurred' => \__('Es ist ein Fehler aufgetreten', Rapidmail::TEXT_DOMAIN),
-                'msg_subscribe_success' => \__('Vielen Dank für Ihre Anmeldung!', Rapidmail::TEXT_DOMAIN),
+                'msg_an_error_occurred' => empty($errorMessage) ? \__('Es ist ein Fehler aufgetreten', Rapidmail::TEXT_DOMAIN) : $errorMessage,
+                'msg_subscribe_success' => empty($successMessage) ? \__('Vielen Dank für Ihre Anmeldung!', Rapidmail::TEXT_DOMAIN) : $successMessage,
                 'spinner_uri' => \get_site_url(null, '/wp-includes/images/wpspin_light.gif')
             ]);
             \wp_enqueue_script('rapidmail-widget-js');

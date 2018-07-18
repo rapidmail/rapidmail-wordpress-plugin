@@ -152,6 +152,9 @@ class Admin {
 
         }
 
+        $sane_data['form_subscription_success_message'] = isset($values['form_subscription_success_message']) ? $values['form_subscription_success_message'] : '';
+        $sane_data['form_subscription_error_message'] = isset($values['form_subscription_error_message']) ? $values['form_subscription_error_message'] : '';
+
         return $sane_data;
 
     }
@@ -351,6 +354,33 @@ class Admin {
             },
             'rapidmail',
             'comments'
+        );
+
+        \add_settings_section(
+            'formtexts',
+            \__('Formulartexte', Rapidmail::TEXT_DOMAIN),
+            '',
+            'rapidmail'
+        );
+
+        \add_settings_field(
+            'form_subscription_success_message',
+            \__('Anmeldung erfolgreich', Rapidmail::TEXT_DOMAIN),
+            function() {
+                echo '<input type="text" class="regular-text" value="' . \esc_html($this->options->get('form_subscription_success_message')) . '" id="form_subscription_success_message" name="rm_options[form_subscription_success_message]" placeholder="' . esc_html__('Vielen Dank für Ihre Anmeldung!') . '">';
+            },
+            'rapidmail',
+            'formtexts'
+        );
+
+        \add_settings_field(
+            'form_subscription_error_message',
+            \__('Fehler bei der Anmeldung', Rapidmail::TEXT_DOMAIN),
+            function() {
+                echo '<input type="text" class="regular-text" value="' . \esc_html($this->options->get('form_subscription_error_message')) . '" id="form_subscription_error_message" name="rm_options[form_subscription_error_message]" placeholder="' . esc_html__('Es ist ein Fehler aufgetreten') . '">';
+            },
+            'rapidmail',
+            'formtexts'
         );
 
     }
