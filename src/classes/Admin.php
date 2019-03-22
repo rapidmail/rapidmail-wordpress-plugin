@@ -54,11 +54,12 @@ class Admin {
     public function showOptionsPage() {
 
         $link = '<a href="https://www.rapidmail.de/wordpress-plugin/lp?pid=o-wp&tid2=wpplugin&version=' . Rapidmail::PLUGIN_VERSION . '" target="_blank">' . \__('Jetzt kostenlos bei rapidmail anmelden!', Rapidmail::TEXT_DOMAIN) . '</a>';
+        $help_link = '<a href="https://de.rapidmail.wiki/faq/wordpress-plugin/" target="_blank">' . \__('rapidmail Hilfebereich', Rapidmail::TEXT_DOMAIN) . '</a>';
 
         ?>
         <div class="wrap">
             <h1><?php \_e('Einstellungen', Rapidmail::TEXT_DOMAIN); ?> &rsaquo; rapidmail</h1>
-            <p><?php \printf(\__('Bitte hinterlegen Sie hier Ihre rapidmail API Zugangsdaten. Wenn Sie noch kein Kunde bei rapidmail sind, können Sie sich hier kostenlos anmelden: %s', Rapidmail::TEXT_DOMAIN), $link); ?></p>
+            <p><?php \printf(\__('Bitte hinterlegen Sie hier Ihre rapidmail API Zugangsdaten. Wenn Sie noch kein Kunde bei rapidmail sind, können Sie sich hier kostenlos anmelden: %s Eine Anleitung finden Sie außerdem im %s.', Rapidmail::TEXT_DOMAIN), $link, $help_link); ?></p>
             <?php if ($this->options->getApiVersion() === 1): ?>
                 <p style="color: #807359; border: 1px solid #e5cfa1; padding: 5px 5px 5px 35px; background: #fcf4e3 url(<?php echo \esc_url(\admin_url('images/no.png' )); ?>) no-repeat 10px center;">
                     <?php echo \__('Sie verwenden zurzeit die veraltete Version 1 der rapidmail API. Um den vollen Funktionsumfang sowie regelmäßige Updates dieses Plugins genießen zu können, sollten Sie in Zukunft auf die Version 3 der rapidmail API umstellen. Das ist mit wenigen Klicks im Kundenbereich von rapidmail möglich.', Rapidmail::TEXT_DOMAIN); ?>
@@ -291,7 +292,7 @@ class Admin {
                         }
 
                     } else {
-                        echo '<option value="0">' . \__('Bitte gültige Zugangsdaten hinterlegen', Rapidmail::TEXT_DOMAIN) . '</option>';
+                        echo '<option value="0">' . \__('Bitte gültige Zugangsdaten hinterlegen und auf &bdquo;Änderungen speichern&ldquo; klicken', Rapidmail::TEXT_DOMAIN) . '</option>';
                     }
 
                     echo '</select>';
