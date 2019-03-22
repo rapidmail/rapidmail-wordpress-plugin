@@ -95,7 +95,7 @@
                     $fieldConfig['label'] = \__('Text zur Einwilligung', Rapidmail::TEXT_DOMAIN);
                 }
 
-                if ($fieldName !== 'captcha' && $fieldConfig['type'] !== 'honeypot') {
+                if ($fieldName !== 'captcha') {
                     $fields[$fieldName] = $fieldConfig;
                 }
 
@@ -142,12 +142,14 @@
             <?php
 
             foreach (self::getFormConfig() AS $id => $config) {
+                if ($config['type'] !== 'honeypot') {
             ?>
                 <p>
                     <input class="checkbox" type="checkbox" id="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>" name="<?php echo \esc_attr($this->get_field_name('show_' . $id)); ?>" <?php if ($args['show_' . $id] || $config['constraints']['required']) { ?> checked="checked" <?php } if ($config['constraints']['required']) { ?> disabled="disabled" title="<?php \_e('Pflichtfeld', Rapidmail::TEXT_DOMAIN); ?>"<?php } ?>/>
                     <label for="<?php echo \esc_attr($this->get_field_id('show_' . $id)); ?>"><?php echo $config['label']; ?></label>
                 </p>
             <?php
+                }
             }
 
         }

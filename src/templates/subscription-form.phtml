@@ -4,16 +4,21 @@
     <form class="rm-form" id="rm-subscriptionform-<?php echo $widget->number; ?>" action="<?php echo $url; ?>" method="post" target="_blank">
 
         <ul class="rm-form-container">
-
             <?php foreach ($form_config as $field_name => $field_config): ?>
-
-                <?php if ((empty($instance['show_' . $field_name]) && empty($field_config['constraints']['required'])) || in_array($field_name, ['captcha', 'submit'])): continue; endif; ?>
 
                 <?php if ($field_config['type'] === 'honeypot'): ?>
                     <li style="position:absolute; z-index: -100; left:-6000px;" aria-hidden="true">
                         <input type="text" name="<?php echo $field_name; ?>" value="" tabindex="-1"/>
+                        <textarea name="rm_comment" tabindex="-1"></textarea>
                     </li>
-                <?php elseif ($field_config['type'] === 'radio'): ?>
+                <?php endif; ?>
+
+            <?php endforeach; ?>
+            <?php foreach ($form_config as $field_name => $field_config): ?>
+
+                <?php if ((empty($instance['show_' . $field_name]) && empty($field_config['constraints']['required'])) || in_array($field_name, ['captcha', 'submit'])): continue; endif; ?>
+
+                <?php if ($field_config['type'] === 'radio'): ?>
                     <li rel="radio">
                         <label><?php echo \esc_html($field_config['label']); ?></label>
 
