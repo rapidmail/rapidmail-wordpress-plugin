@@ -3,7 +3,7 @@ Contributors: rapidmail GmbH
 Tags: rapidmail, newsletter, newsletter tool, newsletter software, email marketing, email marketing service provider
 Requires at least: 4.6
 Tested up to: 5.0.0
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,11 @@ Weitere Informationen finden Sie hier: https://www.rapidmail.de/preise?pid=o-wp&
 5. Für Profis: Short-Code Integration verwenden
 
 == Changelog ==
+
+= 2.1.4 =
+* Send accept header to API v3 endpoint explicitly
+* Render hidden form fields topmost within enclosing form
+* Apply wording changes to plugin settings page
 
 = 2.1.3 =
 * Mark compatible with Wordpress 5.0
