@@ -107,6 +107,7 @@
 
             $args['headers']['Authorization'] = 'Basic ' . \base64_encode($this->username . ':' . $this->password);
             $args['headers']['User-Agent'] = 'rapidmail Wordpress Plugin ' . Rapidmail::PLUGIN_VERSION . ' on Wordpress ' . \get_bloginfo('version');
+            $args['headers']['Accept'] = 'application/json';
 
             return \wp_remote_request(
                 $url,
