@@ -12,22 +12,22 @@
         /**
          * @var string
          */
-        const API_GET_RL_RESOURCE = '/recipientlists/%u';
+        const API_GET_RL_RESOURCE = '/v1/recipientlists/%u';
 
         /**
          * @var string
          */
-        const API_GET_RLS_RESOURCE = '/recipientlists';
+        const API_GET_RLS_RESOURCE = '/v1/recipientlists';
 
         /**
          * @var string
          */
-        const API_CREATE_RCPT_RESOURCE = '/recipients';
+        const API_CREATE_RCPT_RESOURCE = '/v1/recipients';
 
         /**
          * @var string
          */
-        const API_GET_FORM_FIELDS_RESOURCE = '/forms/%u-default';
+        const API_GET_FORM_FIELDS_RESOURCE = '/v1/forms/%u-default';
 
         /**
          * @var string
